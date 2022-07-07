@@ -84,7 +84,7 @@ either locally or on a live blockchain.
    ```sh
    git clone https://github.com/keinberger/sol-governed-nft-marketplace
    ```
-2. Make sure you have a node package manager like [YARN]() or [NPM]() installed
+2. Make sure you have a node package manager like [YARN](https://yarnpkg.com/) or [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed
 2. Install dependencies
    ```sh
    yarn install
