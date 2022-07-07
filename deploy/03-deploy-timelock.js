@@ -30,7 +30,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     initialize(contractConfig.name, deployedContract.address, args)
 
     if (!isDevelopmentChain && process.env.ETHERSCAN_API_KEY) {
-        await verify(deployedContract.address, constructorArguments)
+        await verify(deployedContract.address, [])
     }
 
     log("------------------------------")

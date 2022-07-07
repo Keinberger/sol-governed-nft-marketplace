@@ -51,7 +51,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log(`${contractConfig.name} (${deployedContract.address}) deployed at (${network.name})`)
 
     if (!isDevelopmentChain && process.env.ETHERSCAN_API_KEY) {
-        await verify(deployedContract.address, constructorArguments)
+        await verify(deployedContract.address, [])
     }
 
     log("------------------------------")

@@ -56,7 +56,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     )
 
     // governanceToken: delegate votes of deployer
-    log(`Delegating votes of deployer`)
     const tokenProxy = await ethers.getContract(contracts.GovernanceToken.name + "_Proxy", deployer)
     const token = await ethers.getContractAt(
         contracts.GovernanceToken.name,
