@@ -4,6 +4,11 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
 contract NftMarketplaceGovernanceToken is ERC20VotesUpgradeable {
+    /// @notice ensures that initialize can only be called through proxy
+    constructor() {
+        _disableInitializers();
+    }
+
     function initialize(
         string memory name,
         string memory symbol,

@@ -148,6 +148,11 @@ contract NftMarketplace is OwnableUpgradeable {
         _;
     }
 
+    /// @notice ensures that initialize can only be called through proxy
+    constructor() {
+        _disableInitializers();
+    }
+
     /**
      * @dev Initializer function which replaces constructor for upgradeability functionality.
      * Sets the msg.sender as owner
