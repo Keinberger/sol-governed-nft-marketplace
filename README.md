@@ -108,8 +108,7 @@ yarn hardhat deploy
 The deploy scripts will take care of setting up the contracts, so access-control,
 upgradeability and other features are set up properly.
 
->""Note""
->The deployer still retains all governance tokens after deployment. In a real implementation of the project, the tokens would need to be 
+>**Note**: The deployer still retains all governance tokens after deployment. In a real implementation of the project, the tokens would need to be 
 >distributed among shareholders of the project, to provide true decentralized governance of the marketplace.
 
 ### Scripts
