@@ -3,42 +3,19 @@
 An NFT Marketplace allowing users to buy/sell NFTs using regular ETH and ERC20 tokens.
 The marketplace is managed by a DAO (governor contract) and implements upgradeability.
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about">About</a>
-      <ul>
-        <li><a href="#nftmarketplace">NftMarketplace</a></li>
-      </ul>
-      <ul>
-        <li><a href="#nftmarketplacegovernor">NftMarketplaceGovernor</a></li>
-      </ul>
-      <ul>
-        <li><a href="#nftmarketplacegovernancetoken">NftMarketplaceGovernanceToken</a></li>
-      </ul>
-    </li>
-    <li><a href="#built-using">Built Using</a></li>
-    <li>
-       <a href="#usage">Usage</a>
-       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-       </ul>
-       <ul>
-        <li><a href="#testing">Testing</a></li>
-       </ul>
-       <ul>
-        <li><a href="#deployment">Deployment</a></li>
-       </ul>
-       <ul>
-        <li><a href="#scripts">Scripts</a></li>
-       </ul>
-    </li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+- [Governed NFT Marketplace](#governed-nft-marketplace)
+  - [About](#about)
+    - [NftMarketplace](#nftmarketplace)
+    - [NftMarketplaceGovernor](#nftmarketplacegovernor)
+    - [NftMarketplaceGovernanceToken](#nftmarketplacegovernancetoken)
+  - [Built Using](#built-using)
+  - [Usage](#usage)
+    - [Prerequisites](#prerequisites)
+    - [Testing](#testing)
+    - [Deployment](#deployment)
+    - [Scripts](#scripts)
+  - [License](#license)
+  - [Contact](#contact)
 
 ## About
 
@@ -70,7 +47,7 @@ Buying NFTs can be done by paying with ETH, or with tokens specified by the sell
 
 This contract is designed to be upgradeable.
 
-* For a detailed documentation of the functionality and code of the NftMarketplace contract see [NftMarketplace-Documentation](./docs/NftMarketplace.md)
+* For a detailed documentation of the functionality and code of the NftMarketplace contract see [NftMarketplace Documentation](./docs/NftMarketplace.md)
 
 ### NftMarketplaceGovernor
 
@@ -107,6 +84,7 @@ either locally or on a live blockchain.
    ```sh
    git clone https://github.com/keinberger/sol-governed-nft-marketplace
    ```
+2. Make sure you have a node package manager like [YARN]() or [NPM]() installed
 2. Install dependencies
    ```sh
    yarn install
@@ -130,9 +108,9 @@ yarn hardhat deploy
 The deploy scripts will take care of setting up the contracts, so access-control,
 upgradeability and other features are set up properly.
 
-NOTE: The deployer still retains all governance tokens after deployment. In a real implementation
-of the project, the tokens would need to be distributed among shareholders of the project, to
-provide true decentralized governance of the marketplace.
+>""Note""
+>The deployer still retains all governance tokens after deployment. In a real implementation of the project, the tokens would need to be 
+>distributed among shareholders of the project, to provide true decentralized governance of the marketplace.
 
 ### Scripts
 
