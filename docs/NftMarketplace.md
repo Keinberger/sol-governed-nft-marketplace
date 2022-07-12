@@ -541,6 +541,17 @@ Thrown when `tokenId` of `nftAddress` is already listed on market
 | nftAddress | address | undefined |
 | tokenId | uint256 | undefined |
 
+### NftMarketplace__EthTransferFailed
+
+```solidity
+error NftMarketplace__EthTransferFailed()
+```
+
+Thrown when eth transfer failed
+
+
+
+
 ### NftMarketplace__NftNotListed
 
 ```solidity

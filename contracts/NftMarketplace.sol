@@ -28,6 +28,8 @@ error NftMarketplace__NotEnoughFunds();
 error NftMarketplace__NotEnoughAllowance();
 /// @notice Thrown when erc20 token transfer failed
 error NftMarketplace__TokenTransferFailed(address tokenAddress);
+/// @notice Thrown when eth transfer failed
+error NftMarketplace__EthTransferFailed();
 /// @notice Thrown when caller has no eligable funds for withdrawal
 error NftMarketplace__NoEligableFunds();
 
@@ -455,7 +457,8 @@ contract NftMarketplace is OwnableUpgradeable {
         if (amount <= 0) revert NftMarketplace__NoEligableFunds();
 
         s_eligableFunds[msg.sender] = 0;
-        payable(msg.sender).transfer(amount);
+        (bool sent, ) = payable(msg.sender).call{value: amount}("");
+        if (!sent) revert NftMarketplace__EthTransferFailed();
     }
 
     /**
