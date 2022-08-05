@@ -26,15 +26,7 @@ const contractName = contractConfig.name
                   const owner = await nftMarketplace.owner()
                   expect(owner).to.equal(contract.address)
               })
-              it("nftMarketplace proxy admin", async () => {
-                  const owner = await proxyAdmin.owner()
-                  expect(owner).to.equal(contract.address)
-              })
-              it("governor proxy admin", async () => {
-                  const owner = await proxyAdmin.owner()
-                  expect(owner).to.equal(contract.address)
-              })
-              it("governanceToken proxy admin", async () => {
+              it("common proxy admin", async () => {
                   const owner = await proxyAdmin.owner()
                   expect(owner).to.equal(contract.address)
               })

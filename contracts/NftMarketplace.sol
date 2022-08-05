@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -7,9 +7,9 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /// @notice Thrown when state of contract is equal to the one specified
-error NftMarketplace__StateIsNot(uint256);
+error NftMarketplace__StateIsNot(uint256 state);
 /// @notice Thrown when state of contract is not equal to the one specified
-error NftMarketplace__StateIs(uint256);
+error NftMarketplace__StateIs(uint256 state);
 /// @notice Thrown when the token (erc20) is not listed as payment token
 error NftMarketplace__TokenNotListed(address tokenAddress);
 /// @notice Thrown when price is below or equal to zero
@@ -24,14 +24,14 @@ error NftMarketplace__NftNotListed(address nftAddress, uint256 tokenId);
 error NftMarketplace__NotOwnerOfNft(address nftAddress, uint256 tokenId);
 /// @notice Thrown when caller does not send enough eth to market
 error NftMarketplace__NotEnoughFunds();
-/// @notice Thrown when allowance  of market is less than required
+/// @notice Thrown when allowance of market is less than required
 error NftMarketplace__NotEnoughAllowance();
 /// @notice Thrown when erc20 token transfer failed
 error NftMarketplace__TokenTransferFailed(address tokenAddress);
 /// @notice Thrown when eth transfer failed
 error NftMarketplace__EthTransferFailed();
-/// @notice Thrown when caller has no eligable funds for withdrawal
-error NftMarketplace__NoEligableFunds();
+/// @notice Thrown when caller has no eligible funds for withdrawal
+error NftMarketplace__NoEligibleFunds();
 
 /**
  * @title NftMarketplace
@@ -87,8 +87,8 @@ contract NftMarketplace is OwnableUpgradeable {
     MarketState private s_marketState;
     /// @dev nftContractAddress => nftTokenId => Listing
     mapping(address => mapping(uint256 => Listing)) private s_listings;
-    /// @dev userAddress to eligable eth (in wei) for withdrawal
-    mapping(address => uint256) private s_eligableFunds;
+    /// @dev userAddress to eligible eth (in wei) for withdrawal
+    mapping(address => uint256) private s_eligibleFunds;
     /// @dev erc20ContractAddress => PaymentToken
     mapping(address => PaymentToken) private s_paymentTokens;
 
@@ -360,8 +360,8 @@ contract NftMarketplace is OwnableUpgradeable {
      * This implementation will transfer the nft to the buyer directly,
      * while granting the seller address the right to withdraw the eth
      * amount sent by the buyer to the marketplace by calling the
-     * withdrawFunds function. Checking the amount of eligable funds
-     * for withdrawal can be done by calling getEligableFunds.
+     * withdrawFunds function. Checking the amount of eligible funds
+     * for withdrawal can be done by calling getEligibleFunds.
      *
      * This function emits the {NftBought} event.
      */
@@ -381,7 +381,7 @@ contract NftMarketplace is OwnableUpgradeable {
 
         delete s_listings[nftAddr][tokenId];
 
-        s_eligableFunds[l_listing.seller] += msg.value;
+        s_eligibleFunds[l_listing.seller] += msg.value;
 
         nft.safeTransferFrom(l_listing.seller, msg.sender, tokenId);
 
@@ -402,7 +402,7 @@ contract NftMarketplace is OwnableUpgradeable {
      * nft.
      *
      * The amount of tokens needed of paymentToken at index `paymentTokenIndex`
-     * is retrieved from the getTokenAmountFromPrice function, which converts
+     * is retrieved from the getTokenAmountFromEthAmount function, which converts
      * the price (eth in wei) to the token amount (in wei) using Chainlink
      * price feeds.
      *
@@ -447,16 +447,16 @@ contract NftMarketplace is OwnableUpgradeable {
     }
 
     /**
-     * @notice Function for withdrawing eth from the marketplace, if eligable
+     * @notice Function for withdrawing eth from the marketplace, if eligible
      * funds is greater than zero (only after purchases with eth)
      * @dev This function reverts if the market is CLOSED or if there are no
-     * eligable funds of the caller to withdraw.
+     * eligible funds of the caller to withdraw.
      */
     function withdrawFunds() external stateIsNot(MarketState.CLOSED) {
-        uint256 amount = s_eligableFunds[msg.sender];
-        if (amount <= 0) revert NftMarketplace__NoEligableFunds();
+        uint256 amount = s_eligibleFunds[msg.sender];
+        if (amount <= 0) revert NftMarketplace__NoEligibleFunds();
 
-        s_eligableFunds[msg.sender] = 0;
+        s_eligibleFunds[msg.sender] = 0;
         (bool sent, ) = payable(msg.sender).call{value: amount}("");
         if (!sent) revert NftMarketplace__EthTransferFailed();
     }
@@ -511,14 +511,14 @@ contract NftMarketplace is OwnableUpgradeable {
     }
 
     /**
-     * @notice Function for looking up the amount of eligable funds
+     * @notice Function for looking up the amount of eligible funds
      * that can be withdrawn
      * @param addr Is the address to be looked up
-     * @return Eligable funds of `addr` for withdrawal from
+     * @return Eligible funds of `addr` for withdrawal from
      * marketplace
      */
-    function getEligableFunds(address addr) public view returns (uint256) {
-        return s_eligableFunds[addr];
+    function getEligibleFunds(address addr) public view returns (uint256) {
+        return s_eligibleFunds[addr];
     }
 
     /**

@@ -65,11 +65,20 @@ const contractName = contractConfig.name
 
                   newContract = await ethers.getContractAt(newContractName, proxy.address, deployer)
               })
-              it("retains vars", async () => {
+              it("retains storage vars", async () => {
                   const state = await newContract.getState()
                   expect(state.toString()).to.equal("1")
               })
-              it("allows for new state vars", async () => {})
-              it("allows for new funcs", async () => {})
+              it("allows for new storage vars", async () => {
+                  const newVar = await newContract.newValue()
+                  expect(newVar.toString()).to.equal("0")
+              })
+              it("allows for new funcs", async () => {
+                  const newValue = "20"
+                  await newContract.setNewValue(newValue)
+
+                  const newValueRetrieved = await newContract.newValue()
+                  expect(newValueRetrieved.toString()).to.equal(newValue)
+              })
           })
       })
