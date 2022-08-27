@@ -32,6 +32,8 @@ error NftMarketplace__TokenTransferFailed(address tokenAddress);
 error NftMarketplace__EthTransferFailed();
 /// @notice Thrown when caller has no eligible funds for withdrawal
 error NftMarketplace__NoEligibleFunds();
+/// @notice Thrown when index does not exist in an array
+error NftMarketplace__IndexOutOfBounds();
 
 /**
  * @title NftMarketplace
@@ -104,12 +106,17 @@ contract NftMarketplace is OwnableUpgradeable {
     event NftDelisted(address indexed nftAddr, uint256 indexed tokenId);
     /// @notice Event emitted when seller updates the price of an nft
     event NftPriceUpdated(address indexed nftAddr, uint256 indexed tokenId, uint256 indexed price);
-    /// @notice Event emitted when seller updates an erc20 token accepted as payment for the nft
-    event NftPaymentTokenUpdated(
+    /// @notice Event emitted when seller adds an erc20 token accepted as payment for the nft
+    event NftPaymentTokenAdded(
         address indexed nftAddr,
         uint256 indexed tokenId,
-        uint256 indexed indexUpdated,
-        address paymentTokenAddress
+        address indexed paymentTokenAddress
+    );
+    /// @notice Event emitted when seller removes an erc20 token previously accepted as payment for the nft
+    event NftPaymentTokenRemoved(
+        address indexed nftAddr,
+        uint256 indexed tokenId,
+        address indexed paymentTokenAddress
     );
     /// @notice Event emitted when an nft is bought
     event NftBought(address nftAddr, uint256 tokenId, address indexed buyer, uint256 indexed price);
@@ -313,27 +320,9 @@ contract NftMarketplace is OwnableUpgradeable {
         emit NftPriceUpdated(nftAddr, tokenId, newPrice);
     }
 
-    /**
-     * @notice Function for updating a payment token (erc20 token allowed
-     * as payment method) of an nft listed on the marketplace.
-     * @param nftAddr Is the address of the nft contract
-     * @param tokenId Is the id of the nft
-     * @param indexToUpdate Is the index of the paymentToken in the
-     * Listing.paymentTokenAddresses array
-     * @param paymentTokenAddress Is the new address as replacement for the
-     * old paymentTokenAddress
-     * @dev This function reverts if the market is not OPEN, the caller
-     * is not the owner of `tokenId` at `nftAddr`, or the nft is not
-     * listed on the marketplace. The function also reverts if the
-     * `paymentTokenAddress` is not allowed to be used as a paymentToken by
-     * the contract. (not part of `s_paymentTokens`)
-     *
-     * This function emits the {NftPaymentTokenUpdated} event.
-     */
-    function updateListingPaymentToken(
+    function addPaymentTokenAtListing(
         address nftAddr,
         uint256 tokenId,
-        uint256 indexToUpdate,
         address paymentTokenAddress
     )
         external
@@ -344,8 +333,34 @@ contract NftMarketplace is OwnableUpgradeable {
         if (s_paymentTokens[paymentTokenAddress].decimals == 0)
             revert NftMarketplace__TokenNotListed(paymentTokenAddress);
 
-        s_listings[nftAddr][tokenId].paymentTokenAddresses[indexToUpdate] = paymentTokenAddress;
-        emit NftPaymentTokenUpdated(nftAddr, tokenId, indexToUpdate, paymentTokenAddress);
+        s_listings[nftAddr][tokenId].paymentTokenAddresses.push(paymentTokenAddress);
+
+        emit NftPaymentTokenAdded(nftAddr, tokenId, paymentTokenAddress);
+    }
+
+    function removePaymentTokenAtListing(
+        address nftAddr,
+        uint256 tokenId,
+        uint256 index
+    )
+        external
+        stateIs(MarketState.OPEN)
+        isNftOwner(msg.sender, nftAddr, tokenId)
+        isListed(nftAddr, tokenId)
+    {
+        address[] memory l_paymentTokenAddresses = s_listings[nftAddr][tokenId]
+            .paymentTokenAddresses;
+        if (index >= l_paymentTokenAddresses.length) revert NftMarketplace__IndexOutOfBounds();
+
+        // for (uint256 i = index; i < l_paymentTokenAddresses.length - 1; i++) {
+        //     s_listings[nftAddr][tokenId].paymentTokenAddresses[i] = s_listings[nftAddr][tokenId]
+        //         .paymentTokenAddresses[i + 1];
+        // }
+        // s_listings[nftAddr][tokenId].paymentTokenAddresses.pop();
+
+        s_listings[nftAddr][tokenId].paymentTokenAddresses[index] = s_listings[nftAddr][tokenId]
+            .paymentTokenAddresses[s_listings[nftAddr][tokenId].paymentTokenAddresses.length - 1];
+        s_listings[nftAddr][tokenId].paymentTokenAddresses.pop();
     }
 
     /**

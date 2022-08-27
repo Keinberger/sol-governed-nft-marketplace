@@ -220,7 +220,103 @@ const contractName = contractConfig.name
                       .withArgs(nftContract.address, "0", newPrice.toString())
               })
           })
-          describe("updateListingPaymentToken", () => {
+          describe("addPaymentTokenAtListing", () => {
+              let decimals
+              beforeEach(async () => {
+                  await contract.setState(2)
+                  await nftContract.approve(contract.address, "0")
+                  decimals = await basicToken.decimals()
+                  await contract.addPaymentToken(
+                      basicToken.address,
+                      mockAggregator.address,
+                      decimals
+                  )
+                  await contract.listNft(nftContract.address, "0", defaultPrice, [
+                      basicToken.address,
+                  ])
+              })
+              it("reverts if market not open", async () => {
+                  await contract.setState(1)
+                  await expect(
+                      contract.addPaymentTokenAtListing(
+                          nftContract.address,
+                          "0",
+                          governanceToken.address
+                      )
+                  ).to.be.revertedWith("NftMarketplace__StateIsNot(2)")
+              })
+              it("reverts if caller is not nft owner", async () => {
+                  await expect(
+                      userContract.addPaymentTokenAtListing(
+                          nftContract.address,
+                          "0",
+                          governanceToken.address
+                      )
+                  ).to.be.revertedWith(
+                      `NftMarketplace__NotOwnerOfNft("${nftContract.address}", ${"0"})`
+                  )
+              })
+              it("reverts if nft not listed", async () => {
+                  await nftContract.mint()
+
+                  await expect(
+                      contract.addPaymentTokenAtListing(
+                          nftContract.address,
+                          "1",
+                          governanceToken.address
+                      )
+                  ).to.be.revertedWith(
+                      `NftMarketplace__NftNotListed("${nftContract.address}", ${"1"})`
+                  )
+              })
+              it("reverts if payment token not listed", async () => {
+                  await expect(
+                      contract.addPaymentTokenAtListing(
+                          nftContract.address,
+                          "0",
+                          governanceToken.address
+                      )
+                  ).to.be.revertedWith(
+                      `NftMarketplace__TokenNotListed("${governanceToken.address}")`
+                  )
+              })
+              it("adds payment token to listing", async () => {
+                  await contract.addPaymentToken(
+                      governanceToken.address,
+                      mockAggregator.address,
+                      decimals
+                  )
+
+                  await contract.addPaymentTokenAtListing(
+                      nftContract.address,
+                      "0",
+                      governanceToken.address
+                  )
+
+                  const listing = await contract.getListing(nftContract.address, "0")
+                  expect(
+                      listing.paymentTokenAddresses[listing.paymentTokenAddresses.length - 1]
+                  ).to.equal(governanceToken.address)
+              })
+              it("emits event correctly", async () => {
+                  await contract.addPaymentToken(
+                      governanceToken.address,
+                      mockAggregator.address,
+                      decimals
+                  )
+
+                  await expect(
+                      contract.addPaymentTokenAtListing(
+                          nftContract.address,
+                          "0",
+                          governanceToken.address
+                      )
+                  )
+                      .to.emit(contract, "NftPaymentTokenAdded")
+                      .withArgs(nftContract.address, "0", governanceToken.address)
+              })
+          })
+          describe("removePaymentTokenAtListing", () => {
               beforeEach(async () => {
                   await contract.setState(2)
                   await nftContract.approve(contract.address, "0")
@@ -237,45 +333,17 @@ const contractName = contractConfig.name
                   )
                   await contract.listNft(nftContract.address, "0", defaultPrice, [
                       basicToken.address,
+                      governanceToken.address,
                   ])
               })
-              it("reverts if token not listed", async () => {
-                  await contract.removePaymentToken(governanceToken.address)
-
-                  await expect(
-                      contract.updateListingPaymentToken(
-                          nftContract.address,
-                          "0",
-                          "0",
-                          governanceToken.address
-                      )
-                  ).to.be.revertedWith(
-                      `NftMarketplace__TokenNotListed("${governanceToken.address}")`
-                  )
+              it("reverts if market not open", async () => {
+                  await contract.setState(1)
               })
-              it("updates listing", async () => {
-                  await contract.updateListingPaymentToken(
-                      nftContract.address,
-                      "0",
-                      "0",
-                      governanceToken.address
-                  )
-                  const listing = await contract.getListing(nftContract.address, "0")
-
-                  expect(listing.paymentTokenAddresses[0]).to.equal(governanceToken.address)
-              })
-              it("emits event correctly", async () => {
-                  await expect(
-                      contract.updateListingPaymentToken(
-                          nftContract.address,
-                          "0",
-                          "0",
-                          governanceToken.address
-                      )
-                  )
-                      .to.emit(contract, "NftPaymentTokenUpdated")
-                      .withArgs(nftContract.address, "0", "0", governanceToken.address)
-              })
+              it("reverts if caller is not nft owner", async () => {})
+              it("reverts if nft not listed", async () => {})
+              it("reverts if payment token not listed", async () => {})
+              it("adds payment token to listing", async () => {})
+              it("emits event correctly", async () => {})
           })
           describe("buyNftEth", () => {
               beforeEach(async () => {
@@ -313,11 +381,11 @@ const contractName = contractConfig.name
                   const ownerNow = await nftContract.ownerOf("0")
                   expect(ownerNow).to.equal(user.address)
               })
-              it("adds to eligable funds", async () => {
+              it("adds to eligible funds", async () => {
                   await userContract.buyNftEth(nftContract.address, "0", { value: defaultPrice })
-                  const eligableFunds = await contract.getEligableFunds(deployer.address)
+                  const eligibleFunds = await contract.getEligibleFunds(deployer.address)
 
-                  expect(eligableFunds.toString()).to.equal(defaultPrice.toString())
+                  expect(eligibleFunds.toString()).to.equal(defaultPrice.toString())
               })
               it("emits event correctly", async () => {
                   const price = (await contract.getListing(nftContract.address, "0")).nftPrice
@@ -438,7 +506,7 @@ const contractName = contractConfig.name
               })
               it("reverts if no funds to withdraw", async () => {
                   await expect(userContract.withdrawFunds()).to.be.revertedWith(
-                      "NftMarketplace__NoEligableFunds()"
+                      "NftMarketplace__NoEligibleFunds()"
                   )
               })
               it("lets seller withdraw fudns", async () => {

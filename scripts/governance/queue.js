@@ -21,6 +21,8 @@ const main = async (functionToCall, args, description) => {
         await moveTime(constants.MIN_DELAY + 1)
         await moveBlocks(1)
     }
+
+    console.log(`Proposal has been queued up!`)
 }
 
 main(

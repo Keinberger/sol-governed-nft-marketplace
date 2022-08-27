@@ -1,11 +1,12 @@
 const { ethers } = require("hardhat")
 
 const constants = {
+    FRONTEND_FILE_PATH: "../next-marketplace-frontend/constants/",
     ZERO_ADDRESS: "0x0000000000000000000000000000000000000000",
     developmentChains: ["hardhat", "localhost"],
-    MIN_DELAY: 3600,
-    VOTING_DELAY: 1,
-    VOTING_PERIOD: 5,
+    MIN_DELAY: 1, // in seconds / TODO: change to fit needs
+    VOTING_DELAY: 1, // in blocks / TODO: change to fit needs
+    VOTING_PERIOD: 13, // in blocks / TODO: change to fit needs
     MOCK_AGGREGATOR_DECIMALS: 18,
     MOCK_AGGREGATOR_PRICE: "1000",
     scriptsConfig: {
@@ -19,10 +20,10 @@ const constants = {
         },
         nftMarketplace: {
             listNft: {
-                nftAddr: "",
-                tokenId: 0,
-                price: ethers.utils.parseEther("0"),
-                paymentTokens: [""],
+                nftAddr: "0x9658d4bd23601265e14edc636eb6175af80a8382",
+                tokenId: 6,
+                price: ethers.utils.parseEther("0.11"),
+                paymentTokens: ["0x2c79F5d36a6d63a3C5a967A35C6cE122F89ECAA5"],
             },
             buyNftEth: {
                 nftAddr: "",
@@ -34,8 +35,8 @@ const constants = {
                 tokenIndex: 0,
             },
             cancelListing: {
-                nftAddr: "",
-                tokenId: 0,
+                nftAddr: "0x9658d4bd23601265e14edc636eb6175af80a8382",
+                tokenId: 6,
             },
             updateListingPrice: {
                 nftAddr: "",
@@ -92,8 +93,8 @@ const contractsConfigs = {
 }
 
 const networkConfig = {
-    4: {
-        name: "rinkeby",
+    5: {
+        name: "goerli",
         contracts: contractsConfigs,
     },
     31337: {

@@ -20,6 +20,8 @@ const main = async (functionToCall, args, description) => {
     )
     proposals[chainId.toString()] = []
     fs.writeFileSync(constants.scriptsConfig.governance.proposalsFile, JSON.stringify(proposals))
+
+    console.log(`Proposal has been executed!`)
 }
 
 main(

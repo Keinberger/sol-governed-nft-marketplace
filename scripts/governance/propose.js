@@ -30,6 +30,11 @@ const main = async (functionToCall, args, description) => {
     let proposals = JSON.parse(
         fs.readFileSync(constants.scriptsConfig.governance.proposalsFile, "utf8")
     )
+
+    if (proposals[chainId.toString()] === undefined) {
+        proposals[chainId.toString()] = []
+    }
+
     proposals[chainId.toString()].push(proposalId.toString())
     fs.writeFileSync(constants.scriptsConfig.governance.proposalsFile, JSON.stringify(proposals))
 

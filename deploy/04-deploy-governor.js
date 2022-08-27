@@ -29,7 +29,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     ]
 
     log(`Deploying ${contractConfig.name} to ${network.name}`)
-    const deployedContract = await deploy(contractConfig.name, {
+    await deploy(contractConfig.name, {
         from: deployer,
         args: [],
         log: true,
@@ -48,10 +48,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
             },
         },
     })
-    log(`${contractConfig.name} (${deployedContract.address}) deployed at (${network.name})`)
+    const contractImplementation = await ethers.getContract(contractConfig.name+"_Implementation")
+
+    log(`${contractConfig.name} (${contractImplementation.address}) deployed at (${network.name})`)
 
     if (!isDevelopmentChain && process.env.ETHERSCAN_API_KEY) {
-        await verify(deployedContract.address, [])
+        await verify(contractImplementation.address, [])
     }
 
     log("------------------------------")

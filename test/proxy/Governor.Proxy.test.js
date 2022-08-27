@@ -23,7 +23,7 @@ const contractName = contractConfig.name
           it("propose", async () => {
               const nftMarketplace = await ethers.getContract(contracts.NftMarketplace.name)
               const encodedFunctionCall = nftMarketplace.interface.encodeFunctionData(
-                  "getEligableFunds",
+                  "getEligibleFunds",
                   [deployer.address]
               )
 
