@@ -1,0 +1,68 @@
+type ActiveNft @entity {
+    id: ID!
+    buyer: Bytes
+    seller: Bytes!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    price: BigInt
+    paymentTokens: [Bytes!]
+}
+
+type ActivePaymentToken @entity {
+    id: ID!
+    tokenAddress: Bytes!
+}
+
+type NftListed @entity {
+    id: ID!
+    seller: Bytes!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    price: BigInt
+    paymentTokens: [Bytes!]
+}
+
+type NftDelisted @entity {
+    id: ID!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+}
+
+type NftPriceUpdated @entity {
+    id: ID!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    price: BigInt
+}
+
+type NftPaymentTokenAdded @entity {
+    id: ID!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    paymentTokenAddress: Bytes!
+}
+
+type NftPaymentTokenRemoved @entity {
+    id: ID!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    paymentTokenAddress: Bytes!
+}
+
+type NftBought @entity {
+    id: ID!
+    nftAddress: Bytes!
+    tokenId: BigInt!
+    buyer: Bytes!
+    price: BigInt
+}
+
+type PaymentTokenAdded @entity {
+    id: ID!
+    tokenAddress: Bytes!
+}
+
+type PaymentTokenRemoved @entity {
+    id: ID!
+    tokenAddress: Bytes!
+}

@@ -1,0 +1,18 @@
+node_modules
+.env
+coverage
+coverage.json
+
+#Hardhat files
+cache
+artifacts
+.DS_Store
+gas-report.txt
+deployments
+
+#frontend files
+scripts/frontend
+contracts/frontend
+deploy/07-deploy-frontendNft.js
+deploy/08-deploy-frontendToken.js
+frontend-config.js

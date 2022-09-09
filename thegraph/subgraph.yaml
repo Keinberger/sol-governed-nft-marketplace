@@ -1,0 +1,51 @@
+specVersion: 0.0.4
+schema:
+    file: ./schema.graphql
+dataSources:
+    - kind: ethereum
+      name: NftMarketplace
+      network: goerli
+      source:
+          address: "0x7B1Ae2832794f804c4fecdB821D47B0e17199947"
+          abi: NftMarketplace
+          startBlock: 7487161
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - Initialized
+              - NftBought
+              - NftDelisted
+              - NftListed
+              - NftPaymentTokenAdded
+              - NftPaymentTokenRemoved
+              - NftPriceUpdated
+              - OwnershipTransferred
+              - PaymentTokenAdded
+              - PaymentTokenRemoved
+          abis:
+              - name: NftMarketplace
+                file: ./abis/NftMarketplace.json
+          eventHandlers:
+              - event: Initialized(uint8)
+                handler: handleInitialized
+              - event: NftBought(address,uint256,indexed address,indexed uint256)
+                handler: handleNftBought
+              - event: NftDelisted(indexed address,indexed uint256)
+                handler: handleNftDelisted
+              - event: NftListed(indexed address,indexed address,indexed uint256,uint256,address[])
+                handler: handleNftListed
+              - event: NftPaymentTokenAdded(indexed address,indexed uint256,indexed address)
+                handler: handleNftPaymentTokenAdded
+              - event: NftPaymentTokenRemoved(indexed address,indexed uint256,indexed address)
+                handler: handleNftPaymentTokenRemoved
+              - event: NftPriceUpdated(indexed address,indexed uint256,indexed uint256)
+                handler: handleNftPriceUpdated
+              - event: OwnershipTransferred(indexed address,indexed address)
+                handler: handleOwnershipTransferred
+              - event: PaymentTokenAdded(address)
+                handler: handlePaymentTokenAdded
+              - event: PaymentTokenRemoved(address)
+                handler: handlePaymentTokenRemoved
+          file: ./src/nft-marketplace.ts
