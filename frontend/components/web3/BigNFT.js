@@ -8,7 +8,7 @@ import nftTypes from "../../helpers/nftTypes"
 import truncateStr from "../../helpers/truncateStr"
 import { getFormattedInput } from "../../helpers/getFormattedInput"
 
-import delistNft from "../../hooks/nftMarketplace/deListNft"
+import delistNft from "../../hooks/nftMarketplace/delistNft"
 import approveNft from "../../hooks/nftMarketplace/approveNft"
 import listNft from "../../hooks/nftMarketplace/listNft"
 
