@@ -11,10 +11,8 @@ export default function MyNfts(props) {
     const { chainId, account, isWeb3Enabled } = useMoralis()
     const [accountNfts, setAccountNfts] = useState()
 
-    const MORALIS_API_KEY = process.env.NEXT_PUBLIC_MORALIS_API_KEY
-
     const getNftsOf = async (address, chain) => {
-        await Moralis.start({ apiKey: MORALIS_API_KEY })
+        await Moralis.start({ apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY })
 
         const response = await Moralis.EvmApi.account.getNFTs({
             address: address,
