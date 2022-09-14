@@ -6,7 +6,9 @@ import { CookiesProvider } from "react-cookie"
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: "https://api.thegraph.com/subgraphs/name/keinberger/nft-marketplace-goerli",
+    uri:
+        "https://api.thegraph.com/subgraphs/name/keinberger/" +
+        process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
 })
 
 function MyApp({ Component, pageProps }) {

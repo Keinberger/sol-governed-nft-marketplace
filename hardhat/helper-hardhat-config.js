@@ -4,6 +4,7 @@ const constants = {
     FRONTEND_FILE_PATH: "../frontend/constants/",
     ZERO_ADDRESS: ethers.constants.AddressZero,
     developmentChains: ["hardhat", "localhost"],
+    testNetChains: ["goerli"],
     MIN_DELAY: 1, // in seconds / TODO: change to fit needs
     VOTING_DELAY: 1, // in blocks / TODO: change to fit needs
     VOTING_PERIOD: 13, // in blocks / TODO: change to fit needs
@@ -13,13 +14,9 @@ const constants = {
         governance: {
             proposalsFile: "./scripts/governance/proposals.json",
             proposalIndex: 0,
-            functionToCall: "addPaymentToken",
-            args: [
-                "0x055e15708054c38fA9cd23c5d5c84819Ca15A1fE",
-                "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
-                8,
-            ],
-            description: "Add new FrontendToken as payment token",
+            functionToCall: "",
+            args: [],
+            description: "",
             voteWay: 1,
         },
         nftMarketplace: {
@@ -97,6 +94,10 @@ const contractsConfigs = {
 }
 
 const networkConfig = {
+    1: {
+        name: "mainnet",
+        contracts: contractsConfigs,
+    },
     5: {
         name: "goerli",
         contracts: contractsConfigs,

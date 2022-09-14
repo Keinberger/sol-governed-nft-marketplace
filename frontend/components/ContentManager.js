@@ -1,7 +1,7 @@
 import { useMoralis } from "react-moralis"
 import { useEffect, useState } from "react"
 import { useQuery, gql } from "@apollo/client"
-import { useCookies, withCookies } from "react-cookie"
+import { useCookies } from "react-cookie"
 
 import NavBar from "./NavBar"
 import NftsListed from "./sites/NftsListed"
@@ -12,9 +12,9 @@ import WalletNotConnected from "./sites/WalletNotConnected"
 
 const deadAddress = "0x000000000000000000000000000000000000dEaD"
 
-export default withCookies(function ContentManager() {
-    const [content, setContent] = useState(0)
+export default function ContentManager() {
     const [cookies, setCookie] = useCookies(["currentSite", "latestMessage"])
+    const [content, setContent] = useState(0)
     const items = ["Explore NFTs", "MyNFTs", "My Sales", "My Purchases"]
 
     const { isWeb3Enabled, account } = useMoralis()
@@ -107,12 +107,7 @@ export default withCookies(function ContentManager() {
 
     return (
         <section>
-            <NavBar
-                items={items}
-                cookieValues={cookies}
-                contentFunc={setContent}
-                activeItem={content}
-            />
+            <NavBar items={items} contentFunc={setContent} activeItem={content} />
 
             {isWeb3Enabled ? (
                 content == 0 ? (
@@ -147,4 +142,4 @@ export default withCookies(function ContentManager() {
             )}
         </section>
     )
-})
+}

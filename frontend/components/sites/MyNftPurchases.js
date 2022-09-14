@@ -16,8 +16,8 @@ export default function MyNftPurchases(props) {
                     </div>
                     {props.nfts !== undefined && props.nfts.length > 0 ? (
                         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative gap-x-8 gap-y-8 sm:gap-y-16 items-center mx-auto">
-                            {props.nfts.map((nft) => (
-                                <div className="mx-auto md:mx-0">
+                            {props.nfts.map((nft, index) => (
+                                <div className="mx-auto md:mx-0" key={index}>
                                     <NFT
                                         price={nft.price}
                                         nftAddress={nft.nftAddress}
@@ -32,7 +32,7 @@ export default function MyNftPurchases(props) {
                     ) : (
                         <div className="mx-auto text-center mt-28 space-y-3">
                             <h1 className="text-3xl text-slate-600 drop-shadow-xl">
-                                You haven't purchased any{" "}
+                                You haven&apos;t purchased any{" "}
                                 <span className="text-slate-800 py-1 px-2 border border-slate-800 rounded-xl">
                                     NFTs
                                 </span>{" "}

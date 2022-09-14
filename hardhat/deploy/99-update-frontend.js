@@ -9,14 +9,15 @@ module.exports = async () => {
         const chainId = network.config.chainId.toString()
         const nftMarketplaceName = networkConfig[chainId].contracts.NftMarketplace.name
         const frontendNftName = "FrontendNft"
-        const frontendTokenName = "FrontendToken"
+        // const frontendTokenName = "FrontendToken"
 
-        const names = [nftMarketplaceName, frontendNftName, frontendTokenName]
+        const names = [nftMarketplaceName, frontendNftName]
         for (let i = 0; i < names.length; i++) {
             await createFilesIfNecessary(names[i])
             await updateAbi(names[i])
             await updateContractAddresses(chainId.toString(), names[i])
         }
+        console.log("Frontend Application has been fed with the newest data")
     }
 }
 
@@ -73,4 +74,4 @@ const updateContractAddresses = async (chainIdString, contractName) => {
     fs.writeFileSync(filePath, JSON.stringify(currentAddresses))
 }
 
-module.exports.tags = ["all", "frontend"]
+module.exports.tags = ["all", "UpdateFrontend"]

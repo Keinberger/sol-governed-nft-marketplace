@@ -62,6 +62,7 @@ export default function BigNFT({
                                     : "https://etherscan.io/address/" + nftAddress
                             }
                             target="_blank"
+                            rel="noreferrer"
                         >
                             {nftAddress}
                         </a>
@@ -74,6 +75,7 @@ export default function BigNFT({
                                     : "https://etherscan.io/address/" + nftAddress
                             }
                             target="_blank"
+                            rel="noreferrer"
                         >
                             {truncateStr(nftAddress, 15)}
                         </a>
@@ -97,8 +99,8 @@ export default function BigNFT({
                                             Payment Tokens ({paymentTokensToBeAdded.length})
                                         </div>
 
-                                        {paymentTokensToBeAdded.map((token) => (
-                                            <div>
+                                        {paymentTokensToBeAdded.map((token, index) => (
+                                            <div key={index}>
                                                 <div className="hidden md:flex italic text-xs sm:text-sm text-left text-slate-600">
                                                     <a
                                                         href={
@@ -111,6 +113,7 @@ export default function BigNFT({
                                                                   token
                                                         }
                                                         target="_blank"
+                                                        rel="noreferrer"
                                                     >
                                                         {token}
                                                     </a>
@@ -127,6 +130,7 @@ export default function BigNFT({
                                                                   token
                                                         }
                                                         target="_blank"
+                                                        rel="noreferrer"
                                                     >
                                                         {truncateStr(token, 15)}
                                                     </a>
@@ -148,8 +152,8 @@ export default function BigNFT({
                                             Payment Tokens ({paymentTokens.length})
                                         </div>
 
-                                        {paymentTokens.map((token) => (
-                                            <div>
+                                        {paymentTokens.map((token, index) => (
+                                            <div key={index}>
                                                 <div className="hidden md:flex italic text-xs sm:text-sm text-left text-slate-600">
                                                     <a
                                                         href={
@@ -162,6 +166,7 @@ export default function BigNFT({
                                                                   token.address
                                                         }
                                                         target="_blank"
+                                                        rel="noreferrer"
                                                     >
                                                         <span className="font-bold">
                                                             {token.label}
@@ -181,6 +186,7 @@ export default function BigNFT({
                                                                   token.address
                                                         }
                                                         target="_blank"
+                                                        rel="noreferrer"
                                                     >
                                                         <span className="font-bold">
                                                             {token.label}

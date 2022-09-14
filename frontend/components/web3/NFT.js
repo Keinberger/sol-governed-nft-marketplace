@@ -114,6 +114,7 @@ export default function NFT({
                                                               nftAddress
                                                     }
                                                     target="_blank"
+                                                    rel="noreferrer"
                                                 >
                                                     {truncateStr(nftAddress, 15)}
                                                 </a>

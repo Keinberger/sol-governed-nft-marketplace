@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import DarkModeSwitcher from "./DarkModeSwitcher"
 import { ShareIcon } from "@heroicons/react/outline"
 import { ConnectButton } from "@web3uikit/web3"
 import { useNotification } from "@web3uikit/core"
@@ -42,6 +41,7 @@ export default function NavBar(props) {
                     <div className="hidden lg:flex lg:scale-100 space-x-4 mx-auto text-base bg-gray-100 dark:bg-gray-700 py-1 px-1 rounded-xl border-gray-800 drop-shadow-xl">
                         {props.items.map((item, index) => (
                             <button
+                                key={index}
                                 className={`${
                                     index == props.activeItem ? "activeNav" : "0"
                                 } px-3 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl transition ease-in-out duration-300`}
@@ -55,10 +55,9 @@ export default function NavBar(props) {
                         ))}
 
                         <a
-                            href={
-                                "https://www.tally.xyz/governance/eip155:5:0x9AC7819185CbD8b0156F4B339090A2eA0F525229"
-                            }
+                            href={process.env.NEXT_PUBLIC_TALLY_URL}
                             target="_blank"
+                            rel="noreferrer"
                         >
                             <button
                                 className={`items-center flex px-4 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200  transition ease-in-out duration-300`}
@@ -94,6 +93,7 @@ export default function NavBar(props) {
                     <div className={`${switcherClicked ? "active" : ""} dropdown`}>
                         {props.items.map((item, index) => (
                             <button
+                                key={index}
                                 className={`${
                                     index == props.activeItem ? "activeNav" : "0"
                                 } px-3 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl transition ease-in-out duration-300`}

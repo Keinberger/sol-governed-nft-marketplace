@@ -12,6 +12,10 @@ const GOERLI_RPC_URL =
     process.env.RPC_URL !== undefined ? process.env.RPC_URL.replace("network", "goerli") : ""
 const GOERLI_PRIVATE_KEY =
     process.env.GOERLI_PRIVATE_KEY !== undefined ? process.env.GOERLI_PRIVATE_KEY : ""
+const MAINNET_RPC_URL =
+    process.env.RPC_URL !== undefined ? process.env.RPC_URL.replace("network", "mainnet") : ""
+const MAINNET_PRIVATE_KEY =
+    process.env.MAINNET_PRIVATE_KEY !== undefined ? process.env.MAINNET_PRIVATE_KEY : ""
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY
 const REPORT_GAS = process.env.REPORT_GAS
@@ -50,6 +54,12 @@ module.exports = {
             blockConfirmations: 6,
             url: GOERLI_RPC_URL,
             accounts: [GOERLI_PRIVATE_KEY],
+        },
+        mainnet: {
+            chainId: 1,
+            blockConfirmations: 6,
+            url: MAINNET_RPC_URL,
+            accounts: [MAINNET_PRIVATE_KEY],
         },
     },
     namedAccounts: {

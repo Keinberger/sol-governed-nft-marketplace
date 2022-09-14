@@ -18,8 +18,8 @@ export default function NftsListed(props) {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative gap-x-8 gap-y-8 sm:gap-y-16 items-center mx-auto">
                         {props.nfts !== undefined && props.nfts.length > 0
-                            ? props.nfts.map((nft) => (
-                                  <div className="mx-auto md:mx-0">
+                            ? props.nfts.map((nft, index) => (
+                                  <div className="mx-auto md:mx-0" key={index}>
                                       <NFT
                                           price={nft.price}
                                           nftAddress={nft.nftAddress}

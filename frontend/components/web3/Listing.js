@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react"
-import { Modal, useNotification, Select, Input } from "@web3uikit/core"
+import { Modal, useNotification } from "@web3uikit/core"
 import { useMoralis } from "react-moralis"
-import { useCookies } from "react-cookie"
 import { ethers } from "ethers"
-
-import { getChainName } from "../../helpers/getChainName"
-import nftTypes from "../../helpers/nftTypes"
-import truncateStr from "../../helpers/truncateStr"
-
-import Image from "next/image"
 import { FaEthereum } from "react-icons/fa"
 
 import retrieveTokenSymbol from "../../hooks/retrieveTokenSymbol"
 import retrieveTokenAmount from "../../hooks/retrieveTokenAmount"
 import retrieveTokenBalance from "../../hooks/retrieveTokenBalance"
-import delistNft from "../../hooks/nftMarketplace/deListNft"
-import approveNft from "../../hooks/nftMarketplace/approveNft"
-import listNft from "../../hooks/nftMarketplace/listNft"
-import addPaymentToken from "../../hooks/nftMarketplace/addPaymentToken"
-import removePaymentToken from "../../hooks/nftMarketplace/removePaymentToken"
-import buyNftEth from "../../hooks/nftMarketplace/buyNftEth"
-import buyNftErc20 from "../../hooks/nftMarketplace/buyNftErc20"
-import approveErc20 from "../../hooks/nftMarketplace/approveErc20"
 
 import BigNFT from "./BigNFT"
 import PriceBox from "./PriceBox"
@@ -244,8 +229,11 @@ export default function Listing({
                         </h2>
                         <div className="w-full p-5">
                             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-                                {tokenURI.attributes.map((attr) => (
-                                    <div className="text-xs sm:text-sm p-2 rounded-xl border border-cyan-700 bg-cyan-100 text-center">
+                                {tokenURI.attributes.map((attr, index) => (
+                                    <div
+                                        key={index}
+                                        className="text-xs sm:text-sm p-2 rounded-xl border border-cyan-700 bg-cyan-100 text-center"
+                                    >
                                         <h3 className="text-cyan-700">
                                             {capitalizeFirstLetter(attr.trait_type)}
                                         </h3>
