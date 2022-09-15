@@ -70,11 +70,11 @@ export default function PriceBox({
                     ? "Set Price"
                     : "Current Price"}
             </div>
-            <div className="items-center flex space-x-6 font-mono px-3.5 py-3">
+            <div className="items-center flex flex-col space-y-2 sm:space-y-4 font-mono px-3.5 py-3">
                 {ownerAddress == account ? (
                     ""
                 ) : (
-                    <div>
+                    <div className="scale-75 sm:scale-100">
                         <Select
                             label="Pay Using"
                             defaultOptionIndex={0}
@@ -89,7 +89,7 @@ export default function PriceBox({
                 )}
                 <div className="text-base flex items-center sm:text-2xl font-mono font-bold">
                     {ownerAddress == account ? (
-                        <div className="-ml-5 sm:ml-0 md:ml-5 scale-75 sm:scale-100 w-[200px] sm:w-[240px] md:w-[400px] lg:w-[180px] mlg:w-[230px] xl:w-[280px]">
+                        <div className="scale-75 sm:scale-100 w-[200px] sm:w-[240px] md:w-[400px] lg:w-[180px] mlg:w-[230px] xl:w-[280px]">
                             <Input
                                 prefixIcon={<FaEthereum className="text-cyan-800" />}
                                 value={currentNftType == nftTypes.listed ? priceInput : "0"}
@@ -120,10 +120,10 @@ export default function PriceBox({
                 {currentNftType == nftTypes.listed ? (
                     <button
                         className={`rounded-b-xl w-full bg-cyan-700 text-slate-100 
-                                            font-bold text-xs sm:text-base py-2 px-3 sm:py-4 sm:px-5
-                                            transition ease-in-out delay-150 hover:bg-cyan-500
-                                            hover:text-white duration-300 disabled:bg-cyan-600 
-                                            disabled:text-slate-300 disabled:cursor-not-allowed`}
+                        font-bold text-xs sm:text-base py-2 px-3 sm:py-4 sm:px-5
+                        transition ease-in-out delay-150 hover:bg-cyan-500
+                        hover:text-white duration-300 disabled:bg-cyan-600 
+                        disabled:text-slate-300 disabled:cursor-not-allowed`}
                         onClick={
                             ownerAddress == account
                                 ? async () => {
