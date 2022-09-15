@@ -43,8 +43,8 @@ export default function NavBar(props) {
                             <button
                                 key={index}
                                 className={`${
-                                    index == props.activeItem ? "activeNav" : "0"
-                                } px-3 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl transition ease-in-out duration-300`}
+                                    index == props.activeItem ? "activeNav" : ""
+                                } px-3 py-1 text-slate-500 hover:text-slate-800  rounded-xl transition ease-in-out duration-300`}
                                 onClick={() => {
                                     props.contentFunc(index)
                                     setCookie("currentSite", index)
@@ -60,7 +60,7 @@ export default function NavBar(props) {
                             rel="noreferrer"
                         >
                             <button
-                                className={`items-center flex px-4 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200  transition ease-in-out duration-300`}
+                                className={`items-center flex px-4 py-1 text-slate-500 hover:text-slate-800  transition ease-in-out duration-300`}
                             >
                                 Governance
                                 <ShareIcon className="w-6 ml-1" />
@@ -95,8 +95,8 @@ export default function NavBar(props) {
                             <button
                                 key={index}
                                 className={`${
-                                    index == props.activeItem ? "activeNav" : "0"
-                                } px-3 py-1 text-slate-500 hover:text-slate-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl transition ease-in-out duration-300`}
+                                    index == props.activeItem ? "activeNav" : ""
+                                } px-3 py-1 text-slate-500 hover:text-slate-800 rounded-xl transition ease-in-out duration-300`}
                                 onClick={() => {
                                     props.contentFunc(index)
                                     setCookie("currentSite", index)
@@ -106,6 +106,17 @@ export default function NavBar(props) {
                                 {item}
                             </button>
                         ))}
+                        <a
+                            href={process.env.NEXT_PUBLIC_TALLY_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <button
+                                className={`px-3 py-1 text-slate-500 hover:text-slate-800 rounded-xl transition ease-in-out duration-300`}
+                            >
+                                Governance
+                            </button>
+                        </a>
                     </div>
                 </div>
             </nav>
