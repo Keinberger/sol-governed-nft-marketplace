@@ -44,11 +44,15 @@ const constants = {
                 tokenId: 0,
                 newPrice: ethers.utils.parseEther("0"),
             },
-            updateListingPaymentToken: {
+            addPaymentTokenAtListing: {
                 nftAddr: "",
                 tokenId: 0,
-                indexToUpdate: 0,
                 paymentTokenAddress: "",
+            },
+            removePaymentTokenAtListing: {
+                nftAddr: "",
+                tokenId: 0,
+                index: 0,
             },
         },
     },
