@@ -2,7 +2,9 @@
 
 A truly decentralized NFT Marketplace allowing users to buy/sell NFTs using regular ETH and ERC20 tokens.
 
-![Marketplace](github/frontpage.png)(https://nft-marketplace.philipp.keinberger.com)
+![Marketplace](github/frontpage.png)
+
+[nft-marketplace.philipp.keinberger.com](https://nft-marketplace.philipp.keinberger.com)
 
 - [Governed NFT Marketplace](#governed-nft-marketplace)
   - [About](#about)
@@ -58,7 +60,7 @@ Buying NFTs can be done by paying with ETH, or with tokens specified by the sell
 
 This contract is designed to be upgradeable.
 
-- For a detailed documentation of the functionality and code of the NftMarketplace contract see [NftMarketplace Documentation](./docs/NftMarketplace.md)
+- For a detailed documentation of the functionality and code of the NftMarketplace contract see [NftMarketplace Documentation](./hardhat/docs/NftMarketplace.md)
 
 ### NftMarketplaceGovernor
 
@@ -150,8 +152,10 @@ Distributed under the GPL-3.0 License. See `LICENSE` for more information.
 
 ## Contact
 
-Philipp Keinberger - [@phil10013](https://twitter.com/phil10013) - philipp.keinberger@gmail.com
+Philipp Keinberger - [philipp.keinberger.com](https://philipp.keinberger.com) - [@phil10013](https://twitter.com/phil10013) - philipp.keinberger@gmail.com
 
 Project Link: [https://github.com/keinberger/sol-governed-nft-marketplace](https://github.com/keinberger/sol-governed-nft-marketplace)
+
+Project Webpage: [nft-marketplace.philipp.keinberger.com](https://nft-marketplace.philipp.keinberger.com)
 
 <p align="right">(<a href="#governed-nft-marketplace">back to top</a>)</p>
