@@ -2,9 +2,9 @@
 
 A truly decentralized NFT Marketplace allowing users to buy/sell NFTs using regular ETH and ERC20 tokens.
 
-![Marketplace](github/frontpage.png)
-
 [nft-marketplace.philipp.keinberger.com](https://nft-marketplace.philipp.keinberger.com)
+
+![Marketplace](github/frontpage.png)
 
 - [Governed NFT Marketplace](#governed-nft-marketplace)
   - [About](#about)
