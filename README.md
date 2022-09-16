@@ -91,7 +91,9 @@ This project was built using multiple frameworks, the most notable ones being be
 
 ## Usage
 
-The project can be used through the live implementation on Ethereum Mainnet. (insert link)
+The project can be used through the live implementation on Ethereum Mainnet.
+
+[Webpage](https://nft-marketplace.philipp.keinberger.com) | [Etherscan](https://etherscan.io/address/0x6a3420aadffCC20283293b58918DBEf886E13Edf)
 
 Apart from that, one may clone this repo and use the Hardhat project on its own.
 
