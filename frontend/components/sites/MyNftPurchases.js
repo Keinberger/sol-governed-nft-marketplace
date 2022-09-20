@@ -5,7 +5,7 @@ export default function MyNftPurchases(props) {
     return (
         <section name="NftPurchases">
             <div className="w-full">
-                <div className="mx-auto max-w-[250px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[970px] xl:max-w-[1200px] my-20">
+                <div className="mx-auto max-w-[250px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[970px] xl:max-w-[1200px] lg:my-20 my-32">
                     <div>
                         <h1 className="text-3xl sm:text-5xl md:text-4xl font-bold text-center text-slate-900 md:text-left">
                             My{" "}

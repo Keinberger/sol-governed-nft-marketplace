@@ -34,7 +34,7 @@ export default function NavBar(props) {
 
     return (
         <section>
-            <nav className="relative container mx-auto py-6">
+            <nav className="container mx-auto py-6">
                 <div className="flex items-center justify-between mx-auto pt-5">
                     {/* <div></div> */}
 
@@ -88,7 +88,6 @@ export default function NavBar(props) {
                         <span className="hamburger-bottom"></span>
                     </button>
                 </div>
-
                 <div className="lg:hidden">
                     <div className={`${switcherClicked ? "active" : ""} dropdown`}>
                         {props.items.map((item, index) => (
