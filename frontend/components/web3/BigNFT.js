@@ -27,7 +27,7 @@ export default function BigNFT({
     handleTxSuccess,
     handleTxError,
 }) {
-    const [cookies, setCookie] = useCookies(["currentSite", "latestMessage"])
+    const [cookies, setCookie] = useCookies(["latestMessage"])
     const { account, chainId } = useMoralis()
     const chainName = getChainName(chainId)
 
