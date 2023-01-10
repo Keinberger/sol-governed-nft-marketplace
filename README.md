@@ -4,7 +4,7 @@ A truly decentralized NFT Marketplace allowing users to buy/sell NFTs using regu
 
 [nft-marketplace.philipp.keinberger.com](https://nft-marketplace.philipp.keinberger.com)
 
-![Marketplace](github/frontpage.png)
+[![Marketplace](github/frontpage.png)](https://nft-marketplace.philipp.keinberger.com)
 
 - [Governed NFT Marketplace](#governed-nft-marketplace)
   - [About](#about)
