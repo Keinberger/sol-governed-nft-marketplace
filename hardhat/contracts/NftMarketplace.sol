@@ -215,11 +215,9 @@ contract NftMarketplace is OwnableUpgradeable {
      *
      * This function emits the {PaymentTokenRemoved} event.
      */
-    function removePaymentToken(address tokenAddress)
-        external
-        onlyOwner
-        stateIsNot(MarketState.CLOSED)
-    {
+    function removePaymentToken(
+        address tokenAddress
+    ) external onlyOwner stateIsNot(MarketState.CLOSED) {
         delete s_paymentTokens[tokenAddress];
 
         emit PaymentTokenRemoved(tokenAddress);
@@ -261,8 +259,8 @@ contract NftMarketplace is OwnableUpgradeable {
 
         for (uint256 index = 0; index < allowedPaymentTokens.length; index++) {
             address l_address = allowedPaymentTokens[index];
-            PaymentToken memory l_paymentToken = s_paymentTokens[l_address];
-            if (l_paymentToken.decimals == 0) revert NftMarketplace__TokenNotListed(l_address);
+            if (s_paymentTokens[l_address].decimals == 0)
+                revert NftMarketplace__TokenNotListed(l_address);
         }
 
         s_listings[nftAddr][tokenId] = Listing(msg.sender, nftPrice, allowedPaymentTokens);
@@ -282,7 +280,10 @@ contract NftMarketplace is OwnableUpgradeable {
      * on their own or through a frontend application.
      * This function emits the {NftDelisted} event.
      */
-    function cancelListing(address nftAddr, uint256 tokenId)
+    function cancelListing(
+        address nftAddr,
+        uint256 tokenId
+    )
         external
         stateIs(MarketState.OPEN)
         isNftOwner(msg.sender, nftAddr, tokenId)
@@ -402,12 +403,10 @@ contract NftMarketplace is OwnableUpgradeable {
      *
      * This function emits the {NftBought} event.
      */
-    function buyNftEth(address nftAddr, uint256 tokenId)
-        external
-        payable
-        stateIs(MarketState.OPEN)
-        isListed(nftAddr, tokenId)
-    {
+    function buyNftEth(
+        address nftAddr,
+        uint256 tokenId
+    ) external payable stateIs(MarketState.OPEN) isListed(nftAddr, tokenId) {
         IERC721 nft = IERC721(nftAddr);
         if (nft.getApproved(tokenId) != address(this))
             revert NftMarketplace__NotApprovedForNft(nftAddr, tokenId);
@@ -509,11 +508,10 @@ contract NftMarketplace is OwnableUpgradeable {
      *
      * This implementation returns the token amount in wei (18 decimals).
      */
-    function getTokenAmountFromEthAmount(uint256 ethAmount, address tokenAddress)
-        public
-        view
-        returns (uint256)
-    {
+    function getTokenAmountFromEthAmount(
+        uint256 ethAmount,
+        address tokenAddress
+    ) public view returns (uint256) {
         PaymentToken memory l_paymentToken = s_paymentTokens[tokenAddress];
 
         if (l_paymentToken.priceFeedAddress == address(0))
@@ -523,7 +521,7 @@ contract NftMarketplace is OwnableUpgradeable {
         (, int256 ercPrice, , , ) = priceFeed.latestRoundData();
 
         uint256 power = 18 - l_paymentToken.decimals;
-        uint256 decimalAdjustedErcPrice = uint256(ercPrice) * (10**power);
+        uint256 decimalAdjustedErcPrice = uint256(ercPrice) * (10 ** power);
         return (decimalAdjustedErcPrice * ethAmount) / 1e18;
     }
 
